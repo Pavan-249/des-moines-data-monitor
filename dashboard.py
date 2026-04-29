@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 import boto3
 import pandas as pd
+from botocore.exceptions import ClientError
 
 # -------------------------
 # Config (same as schedule_upload_co2.py)
@@ -17,12 +18,37 @@ input_file_name = "2026Feb12-25_CO2-46_Duwamish.txt"
 # -------------------------
 # Load AWS credentials
 # -------------------------
+@st.cache_resource
+def get_secrets():
+    """Get AWS credentials from Secrets Manager or environment variables."""
+    secret_name = os.getenv("AWS_SECRET_NAME", "des-moines/s3-credentials")
+    
+    # Try to read from Secrets Manager first
+    try:
+        session = boto3.session.Session()
+        client = session.client(service_name='secretsmanager', region_name='us-west-2')
+        response = client.get_secret_value(SecretId=secret_name)
+        secret = json.loads(response['SecretString'])
+        return {
+            "aws_access_key_id": secret.get("aws_access_key_id"),
+            "aws_secret_access_key": secret.get("aws_secret_access_key"),
+            "region": secret.get("region", "us-west-2")
+        }
+    except ClientError:
+        # Fall back to environment variables
+        return {
+            "aws_access_key_id": os.getenv("AWS_ACCESS_KEY_ID"),
+            "aws_secret_access_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
+            "region": os.getenv("AWS_REGION", "us-west-2")
+        }
+
 def create_s3_client():
+    secrets = get_secrets()
     return boto3.client(
         "s3",
-        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
-        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
-        region_name=os.getenv("AWS_REGION", "us-west-2")
+        aws_access_key_id=secrets["aws_access_key_id"],
+        aws_secret_access_key=secrets["aws_secret_access_key"],
+        region_name=secrets["region"]
     )
 
 # -------------------------

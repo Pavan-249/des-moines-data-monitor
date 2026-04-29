@@ -16,9 +16,19 @@ A real-time Streamlit dashboard for monitoring CO2 data uploads to AWS S3.
 ### Prerequisites
 
 - Python 3.8+
-- AWS account with S3 access
+- AWS account with S3 access and Secrets Manager permissions
 
-### Local Development
+### Step 1: Store Credentials Securely
+
+Instead of using a JSON file, store your credentials in AWS Secrets Manager:
+
+```bash
+python setup_secrets.py
+```
+
+This will prompt you for your credentials and store them securely.
+
+### Step 2: Local Development
 
 1. Clone the repo:
 ```bash
@@ -37,30 +47,34 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Set environment variables:
-```bash
-export AWS_ACCESS_KEY_ID="your-key"
-export AWS_SECRET_ACCESS_KEY="your-secret"
-export AWS_REGION="us-west-2"
-export S3_BUCKET_NAME="des-moines-test"
-export S3_PREFIX="licor/raw"
-```
-
-5. Run the dashboard:
+4. Run the dashboard:
 ```bash
 streamlit run dashboard.py
 ```
 
 Open your browser at `http://localhost:8501`
 
+The dashboard will automatically read credentials from AWS Secrets Manager.
+
 ## Deployment
 
 ### Streamlit Cloud
 
-1. Push to GitHub
+1. Push to GitHub (no credentials needed!)
 2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Select this repo
-4. Add secrets in the Settings tab for AWS credentials
+3. Select this repo and deploy
+4. In the **Settings → Secrets**, add:
+
+```
+AWS_ACCESS_KEY_ID = "your-aws-user-access-key"
+AWS_SECRET_ACCESS_KEY = "your-aws-user-secret-key"
+AWS_REGION = "us-west-2"
+S3_BUCKET_NAME = "des-moines-test"
+S3_PREFIX = "licor/raw"
+AWS_SECRET_NAME = "des-moines/s3-credentials"
+```
+
+The dashboard will use these to authenticate and retrieve S3 credentials from Secrets Manager.
 
 ## Files
 
@@ -71,4 +85,10 @@ Open your browser at `http://localhost:8501`
 
 ## Security
 
-Never commit `aws_creds.json` or AWS credentials to version control. Always use environment variables or Streamlit secrets.
+Credentials are stored securely in AWS Secrets Manager, not in the codebase:
+- ✅ No `aws_creds.json` needed
+- ✅ Safe to commit to GitHub
+- ✅ Credentials never exposed in logs or version history
+- ✅ Streamlit Cloud accesses Secrets Manager safely
+
+Never commit actual credentials to version control!
