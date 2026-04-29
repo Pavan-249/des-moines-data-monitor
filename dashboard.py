@@ -18,75 +18,142 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Custom CSS for beautiful styling with background
+# Custom CSS for beautiful styling
 def get_custom_css():
     return """
     <style>
-    /* Background image with overlay */
-    body {
-        background-image: url('https://images.unsplash.com/photo-1556388205-94acc2d77214?w=1200&q=80');
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-    }
-    
-    .main {
-        background: linear-gradient(135deg, rgba(10,25,50,0.92) 0%, rgba(20,40,70,0.95) 100%);
-    }
-    
-    /* Header styling */
-    .header-title {
-        text-align: center;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 2rem;
-        border-radius: 15px;
-        margin-bottom: 2rem;
-        color: white;
-        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
-        animation: slideDown 0.6s ease-out;
-    }
-    
-    .header-title h1 {
+    * {
         margin: 0;
-        font-size: 2.5em;
-        font-weight: 800;
+        padding: 0;
+    }
+    
+    [data-testid="stAppViewContainer"] {
+        background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1f3a 100%);
+        min-height: 100vh;
+    }
+    
+    [data-testid="stMainBlockContainer"] {
+        padding: 2rem 1rem;
+    }
+    
+    /* Header Title Card */
+    .header-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        margin-bottom: 2.5rem;
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-align: center;
+    }
+    
+    .header-container h1 {
+        font-size: 3em;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        letter-spacing: 2px;
+    }
+    
+    .header-container p {
+        font-size: 1.3em;
+        color: rgba(255, 255, 255, 0.95);
+        font-weight: 300;
         letter-spacing: 1px;
     }
     
-    .header-subtitle {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.1em;
-        margin-top: 0.5rem;
+    /* Section Headers */
+    .section-header {
+        color: #a78bfa;
+        font-size: 1.4em;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        margin: 2.5rem 0 1.5rem 0;
+        text-shadow: 0 2px 10px rgba(167, 139, 250, 0.3);
+        padding-left: 1rem;
+        border-left: 5px solid #667eea;
     }
     
-    /* Metric cards */
+    /* Metric Cards */
     [data-testid="metric-container"] {
         background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid rgba(102, 126, 234, 0.3);
-        backdrop-filter: blur(10px);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid rgba(102, 126, 234, 0.4);
+        padding: 1.8rem;
+        border-radius: 16px;
+        backdrop-filter: blur(20px);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
         animation: fadeInUp 0.6s ease-out forwards;
     }
     
     [data-testid="metric-container"]:hover {
-        transform: translateY(-5px);
+        transform: translateY(-8px) scale(1.02);
         background: linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.25) 100%);
-        border-color: rgba(102, 126, 234, 0.6);
-        box-shadow: 0 12px 24px rgba(102, 126, 234, 0.2);
+        border-color: rgba(102, 126, 234, 0.8);
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
     }
     
-    /* Dataframe styling */
+    /* Data Tables */
     [data-testid="dataframe"] {
         background: rgba(30, 50, 80, 0.6) !important;
-        border-radius: 10px;
-        overflow: hidden;
-        border: 1px solid rgba(102, 126, 234, 0.3);
-        animation: fadeInUp 0.8s ease-out;
+        border-radius: 12px !important;
+        border: 1px solid rgba(102, 126, 234, 0.3) !important;
+        overflow: hidden !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
     }
     
-    /* Divider */
+    [data-testid="dataframe"] thead {
+        background: linear-gradient(90deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3)) !important;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.5) !important;
+    }
+    
+    [data-testid="dataframe"] tbody tr:hover {
+        background: rgba(102, 126, 234, 0.2) !important;
+    }
+    
+    /* Progress Bar */
+    .stProgress > div > div > div > div {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+    }
+    
+    /* Columns */
+    .metric-column {
+        background: rgba(20, 35, 60, 0.5);
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid rgba(102, 126, 234, 0.2);
+        margin-bottom: 1rem;
+    }
+    
+    /* Info Boxes */
+    [data-testid="stAlert"] {
+        background: rgba(30, 50, 80, 0.8) !important;
+        border-left: 5px solid #667eea !important;
+        border-radius: 10px !important;
+        padding: 1.2rem !important;
+        margin: 1rem 0 !important;
+    }
+    
+    /* Buttons */
+    button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4) !important;
+    }
+    
+    /* Dividers */
     hr {
         margin: 2rem 0;
         border: none;
@@ -94,49 +161,11 @@ def get_custom_css():
         background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.5), transparent);
     }
     
-    /* Status badges */
-    .status-badge {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 600;
-        font-size: 0.9em;
-    }
-    
-    .status-synced {
-        background: linear-gradient(135deg, rgba(52, 211, 153, 0.3), rgba(16, 185, 129, 0.3));
-        color: #6ee7b7;
-        border: 1px solid rgba(16, 185, 129, 0.5);
-    }
-    
-    .status-pending {
-        background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(217, 119, 6, 0.3));
-        color: #fcd34d;
-        border: 1px solid rgba(217, 119, 6, 0.5);
-    }
-    
-    .status-orphan {
-        background: linear-gradient(135deg, rgba(96, 165, 250, 0.3), rgba(59, 130, 246, 0.3));
-        color: #93c5fd;
-        border: 1px solid rgba(59, 130, 246, 0.5);
-    }
-    
-    /* Section headers */
-    .section-header {
-        color: #a78bfa;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 1.5rem 0 1rem 0;
-        font-size: 1.2em;
-        text-shadow: 0 2px 8px rgba(167, 139, 250, 0.3);
-    }
-    
     /* Animations */
     @keyframes slideDown {
         from {
             opacity: 0;
-            transform: translateY(-30px);
+            transform: translateY(-40px);
         }
         to {
             opacity: 1;
@@ -147,7 +176,7 @@ def get_custom_css():
     @keyframes fadeInUp {
         from {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(40px);
         }
         to {
             opacity: 1;
@@ -156,31 +185,27 @@ def get_custom_css():
     }
     
     @keyframes pulse {
-        0%, 100% {
-            opacity: 1;
-        }
-        50% {
-            opacity: 0.7;
-        }
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
     }
     
-    /* Progress bar */
-    .stProgress > div > div > div > div {
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    .pulse {
+        animation: pulse 2s ease-in-out infinite;
     }
     
-    /* Info/Warning boxes */
-    [data-testid="stAlert"] {
-        background: rgba(30, 50, 80, 0.7) !important;
-        border-left: 4px solid #667eea !important;
-        border-radius: 8px !important;
+    /* Status Indicator */
+    .status-dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
     }
+    
+    .status-synced { background-color: #10b981; }
+    .status-pending { background-color: #f59e0b; }
+    .status-orphan { background-color: #3b82f6; }
     </style>
-    
-    <script>
-    // Smooth scroll behavior
-    document.documentElement.style.scrollBehavior = 'smooth';
-    </script>
     """
 
 # Inject custom CSS
@@ -276,16 +301,25 @@ def get_local_batches():
 # -------------------------
 # Streamlit Dashboard
 # -------------------------
-st.markdown('<div class="header-title"><h1>📊 Des Moines Data Monitor</h1><p class="header-subtitle">Real-time CO2 Data Upload Status</p></div>', unsafe_allow_html=True)
+st.markdown(get_custom_css(), unsafe_allow_html=True)
+
+# Header
+st.markdown("""
+    <div class="header-container">
+        <h1>📊 Des Moines Data Monitor</h1>
+        <p>Real-time CO2 Data Upload Status</p>
+    </div>
+""", unsafe_allow_html=True)
 
 try:
     s3 = create_s3_client()
     
-    # Row 1: Checkpoint Status
+    # ===== CHECKPOINT STATUS =====
     st.markdown('<p class="section-header">🎯 Checkpoint Status</p>', unsafe_allow_html=True)
+    
     offset, updated_at = load_checkpoint()
     
-    col1, col2, col3 = st.columns([1, 1, 1])
+    col1, col2, col3 = st.columns(3)
     with col1:
         st.metric("📍 Byte Offset", f"{offset:,}")
     with col2:
@@ -296,14 +330,15 @@ try:
             progress_pct = (offset / file_size * 100) if file_size > 0 else 0
             st.metric("📈 Progress", f"{progress_pct:.1f}%")
     
-    # Progress bar
+    # Progress visualization
     if os.path.exists(input_file_name):
         file_size = os.path.getsize(input_file_name)
         progress = (offset / file_size) if file_size > 0 else 0
-        st.progress(min(progress, 1.0), text=f"Input file progress: {min(progress * 100, 100):.1f}%")
+        st.progress(min(progress, 1.0), text=f"File Processing: {min(progress * 100, 100):.1f}%")
     
-    # Row 2: S3 vs Local
-    st.markdown('<hr>', unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
+    
+    # ===== UPLOAD STATUS =====
     st.markdown('<p class="section-header">📤 Upload Status</p>', unsafe_allow_html=True)
     
     s3_files = list_s3_uploaded_batches(s3)
@@ -312,7 +347,7 @@ try:
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown(f"<p style='color: #a78bfa; font-weight: 700; font-size: 1.1em;'>☁️ S3 Uploaded ({len(s3_files)} files)</p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #a78bfa; margin-top: 0;'>☁️ S3 Uploaded ({len(s3_files)} files)</h3>", unsafe_allow_html=True)
         if s3_files:
             s3_df = pd.DataFrame(s3_files)
             s3_df["size"] = s3_df["size"].apply(lambda x: f"{x:,.0f} bytes")
@@ -320,10 +355,10 @@ try:
             s3_df = s3_df[["file", "size", "last_modified"]]
             st.dataframe(s3_df, use_container_width=True, hide_index=True)
         else:
-            st.info("✨ No files uploaded yet")
+            st.info("✨ No files uploaded to S3 yet")
     
     with col2:
-        st.markdown(f"<p style='color: #a78bfa; font-weight: 700; font-size: 1.1em;'>💾 Local Batches ({len(local_files)} files)</p>", unsafe_allow_html=True)
+        st.markdown(f"<h3 style='color: #a78bfa; margin-top: 0;'>💾 Local Batches ({len(local_files)} files)</h3>", unsafe_allow_html=True)
         if local_files:
             local_df = pd.DataFrame(local_files)
             local_df["size"] = local_df["size"].apply(lambda x: f"{x:,.0f} bytes")
@@ -331,11 +366,12 @@ try:
             local_df = local_df[["file", "size", "last_modified"]]
             st.dataframe(local_df, use_container_width=True, hide_index=True)
         else:
-            st.info("✨ No local batches found")
+            st.info("✨ No local batches waiting")
     
-    # Row 3: Sync Status
-    st.markdown('<hr>', unsafe_allow_html=True)
-    st.markdown('<p class="section-header">✅ Sync Status</p>', unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
+    
+    # ===== SYNC STATUS =====
+    st.markdown('<p class="section-header">✅ Sync Overview</p>', unsafe_allow_html=True)
     
     s3_file_names = {f["file"] for f in s3_files}
     local_file_names = {f["file"] for f in local_files}
@@ -346,36 +382,63 @@ try:
     
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("✅ Synced", len(synced), delta="In sync" if len(missing_in_s3) == 0 else f"{len(missing_in_s3)} pending")
+        st.metric(
+            "✅ Synced",
+            len(synced),
+            delta="Perfect" if len(missing_in_s3) == 0 else f"{len(missing_in_s3)} pending"
+        )
     with col2:
-        st.metric("⏳ Pending Upload", len(missing_in_s3))
+        st.metric(
+            "⏳ Pending",
+            len(missing_in_s3),
+            delta="Ready to upload" if len(missing_in_s3) > 0 else "None"
+        )
     with col3:
-        st.metric("🔍 S3 Only", len(orphan_in_s3))
+        st.metric(
+            "🔍 Orphans",
+            len(orphan_in_s3),
+            delta="In S3 only" if len(orphan_in_s3) > 0 else "None"
+        )
     
-    # Alerts for pending
-    if missing_in_s3:
-        with st.container():
-            st.warning(f"**⚠️ Pending upload:** {', '.join(sorted(list(missing_in_s3)[:3]))}" + 
-                      (f"... +{len(missing_in_s3)-3} more" if len(missing_in_s3) > 3 else ""))
+    # Alerts
+    col1, col2 = st.columns(2)
     
-    if orphan_in_s3:
-        with st.container():
-            st.info(f"**ℹ️ In S3 only:** {', '.join(sorted(list(orphan_in_s3)[:3]))}" + 
-                   (f"... +{len(orphan_in_s3)-3} more" if len(orphan_in_s3) > 3 else ""))
+    with col1:
+        if missing_in_s3:
+            pending_list = ", ".join(sorted(list(missing_in_s3)[:2]))
+            if len(missing_in_s3) > 2:
+                pending_list += f" +{len(missing_in_s3)-2} more"
+            st.warning(f"**⚠️ Pending Upload:** {pending_list}")
     
-    # Row 4: Quick Actions
-    st.markdown('<hr>', unsafe_allow_html=True)
+    with col2:
+        if orphan_in_s3:
+            orphan_list = ", ".join(sorted(list(orphan_in_s3)[:2]))
+            if len(orphan_in_s3) > 2:
+                orphan_list += f" +{len(orphan_in_s3)-2} more"
+            st.info(f"**ℹ️ S3 Only:** {orphan_list}")
+    
+    st.markdown("<hr>", unsafe_allow_html=True)
+    
+    # ===== QUICK ACTIONS =====
     st.markdown('<p class="section-header">🔄 Actions</p>', unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns([2, 1, 1])
+    
     with col1:
         if st.button("🔄 Refresh Dashboard", use_container_width=True):
             st.rerun()
+    
     with col2:
-        st.info(f"⏱️ Last refreshed: {datetime.now().strftime('%H:%M:%S')}")
+        st.caption("⏱️ Last refresh:")
+    
     with col3:
-        st.caption("💡 Dashboard auto-updates every minute")
+        st.caption(datetime.now().strftime("%H:%M:%S"))
 
 except Exception as e:
-    st.error(f"❌ Error connecting to S3: {str(e)}")
-    st.info("⚠️ Make sure AWS credentials are configured correctly with Secrets Manager or environment variables.")
+    st.markdown("""
+        <div style='background: rgba(239, 68, 68, 0.1); border-left: 5px solid #ef4444; padding: 1.5rem; border-radius: 8px;'>
+            <h3 style='color: #fca5a5; margin: 0 0 0.5rem 0;'>❌ Error Connecting to S3</h3>
+            <p style='color: #fecaca; margin: 0;'>Make sure AWS credentials are configured correctly with Secrets Manager or environment variables.</p>
+        </div>
+    """, unsafe_allow_html=True)
+    st.error(f"Details: {str(e)}")
