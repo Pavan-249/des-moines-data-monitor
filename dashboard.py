@@ -187,6 +187,15 @@ def get_custom_css():
 st.markdown(get_custom_css(), unsafe_allow_html=True)
 
 # -------------------------
+# Config
+# -------------------------
+checkpoint_file_name = "checkpoint.json"
+batch_dir = "batches"
+bucket_name = os.getenv("S3_BUCKET_NAME", "des-moines-test")
+s3_prefix = os.getenv("S3_PREFIX", "licor/raw")
+input_file_name = "2026Feb12-25_CO2-46_Duwamish.txt"
+
+# -------------------------
 # Load AWS credentials
 # -------------------------
 @st.cache_resource
