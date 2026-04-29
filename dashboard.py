@@ -27,9 +27,24 @@ def get_custom_css():
         padding: 0;
     }
     
+    /* Full page background */
+    [data-testid="stAppViewContainer"]::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1f3a 100%),
+                    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:0.1"/><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:0.15"/></linearGradient></defs><rect width="1200" height="600" fill="url(%23sky)"/><circle cx="100" cy="100" r="80" fill="%23667eea" opacity="0.1"/><circle cx="1100" cy="150" r="120" fill="%23764ba2" opacity="0.08"/></svg>');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+    }
+    
     [data-testid="stAppViewContainer"] {
-        background: linear-gradient(135deg, #0a1628 0%, #1a2a4a 50%, #0d1f3a 100%);
-        min-height: 100vh;
+        background: transparent !important;
     }
     
     [data-testid="stMainBlockContainer"] {
@@ -46,6 +61,7 @@ def get_custom_css():
         border: 1px solid rgba(255, 255, 255, 0.2);
         animation: slideDown 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
         text-align: center;
+        backdrop-filter: blur(10px);
     }
     
     .header-container h1 {
@@ -79,26 +95,36 @@ def get_custom_css():
     
     /* Metric Cards */
     [data-testid="metric-container"] {
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
-        border: 2px solid rgba(102, 126, 234, 0.4);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+        border: 2px solid rgba(102, 126, 234, 0.5);
         padding: 1.8rem;
         border-radius: 16px;
         backdrop-filter: blur(20px);
         transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+        box-shadow: 0 8px 32px rgba(102, 126, 234, 0.25);
         animation: fadeInUp 0.6s ease-out forwards;
     }
     
     [data-testid="metric-container"]:hover {
         transform: translateY(-8px) scale(1.02);
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(118, 75, 162, 0.25) 100%);
-        border-color: rgba(102, 126, 234, 0.8);
-        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+        border-color: rgba(102, 126, 234, 0.9);
+        box-shadow: 0 20px 60px rgba(102, 126, 234, 0.5);
+    }
+    
+    /* Info Box */
+    .info-box {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+        border: 2px solid rgba(102, 126, 234, 0.4);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 1rem 0;
+        backdrop-filter: blur(10px);
     }
     
     /* Data Tables */
     [data-testid="dataframe"] {
-        background: rgba(30, 50, 80, 0.6) !important;
+        background: rgba(30, 50, 80, 0.7) !important;
         border-radius: 12px !important;
         border: 1px solid rgba(102, 126, 234, 0.3) !important;
         overflow: hidden !important;
@@ -121,15 +147,6 @@ def get_custom_css():
         box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
     }
     
-    /* Columns */
-    .metric-column {
-        background: rgba(20, 35, 60, 0.5);
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid rgba(102, 126, 234, 0.2);
-        margin-bottom: 1rem;
-    }
-    
     /* Info Boxes */
     [data-testid="stAlert"] {
         background: rgba(30, 50, 80, 0.8) !important;
@@ -137,6 +154,7 @@ def get_custom_css():
         border-radius: 10px !important;
         padding: 1.2rem !important;
         margin: 1rem 0 !important;
+        backdrop-filter: blur(10px);
     }
     
     /* Buttons */
@@ -189,22 +207,42 @@ def get_custom_css():
         50% { opacity: 0.7; }
     }
     
-    .pulse {
-        animation: pulse 2s ease-in-out infinite;
+    /* Status Cards */
+    .sync-card {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+        border: 2px solid rgba(102, 126, 234, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin: 0.5rem 0;
+        backdrop-filter: blur(10px);
     }
     
-    /* Status Indicator */
-    .status-dot {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        margin-right: 8px;
+    .sync-card.good {
+        border-color: rgba(16, 185, 129, 0.5);
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(52, 211, 153, 0.1) 100%);
     }
     
-    .status-synced { background-color: #10b981; }
-    .status-pending { background-color: #f59e0b; }
-    .status-orphan { background-color: #3b82f6; }
+    .sync-card.warning {
+        border-color: rgba(217, 119, 6, 0.5);
+        background: linear-gradient(135deg, rgba(217, 119, 6, 0.1) 0%, rgba(251, 191, 36, 0.1) 100%);
+    }
+    
+    .sync-card.info {
+        border-color: rgba(59, 130, 246, 0.5);
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(96, 165, 250, 0.1) 100%);
+    }
+    
+    .sync-title {
+        font-weight: 700;
+        font-size: 1.1em;
+        margin-bottom: 0.5rem;
+    }
+    
+    .sync-description {
+        font-size: 0.9em;
+        opacity: 0.85;
+        line-height: 1.5;
+    }
     </style>
     """
 
@@ -380,42 +418,70 @@ try:
     missing_in_s3 = local_file_names - s3_file_names
     orphan_in_s3 = s3_file_names - local_file_names
     
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric(
-            "✅ Synced",
-            len(synced),
-            delta="Perfect" if len(missing_in_s3) == 0 else f"{len(missing_in_s3)} pending"
-        )
-    with col2:
-        st.metric(
-            "⏳ Pending",
-            len(missing_in_s3),
-            delta="Ready to upload" if len(missing_in_s3) > 0 else "None"
-        )
-    with col3:
-        st.metric(
-            "🔍 Orphans",
-            len(orphan_in_s3),
-            delta="In S3 only" if len(orphan_in_s3) > 0 else "None"
-        )
+    # Clear explanation of sync status
+    st.markdown("""
+    <div style='background: rgba(102, 126, 234, 0.1); border-left: 5px solid #667eea; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;'>
+        <p style='margin: 0; color: #a78bfa; font-size: 0.95em;'>
+        <strong>What this means:</strong><br>
+        • <strong>✅ Synced:</strong> Files that exist both locally AND in S3 (fully uploaded)<br>
+        • <strong>⏳ Pending:</strong> Files waiting locally but NOT yet in S3 (need upload)<br>
+        • <strong>🔍 Orphans:</strong> Files in S3 but NOT on local disk (uploaded previously, not stored locally)
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    # Alerts
+    # Status cards
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        status_class = "good" if len(missing_in_s3) == 0 else "warning"
+        st.markdown(f"""
+        <div class="sync-card {status_class}">
+            <div class="sync-title">✅ Synced Files</div>
+            <div style='font-size: 2.5em; font-weight: 900; color: #10b981; margin: 0.5rem 0;'>{len(synced)}</div>
+            <div class="sync-description">Files successfully uploaded to S3</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        status_class = "warning" if len(missing_in_s3) > 0 else "good"
+        st.markdown(f"""
+        <div class="sync-card {status_class}">
+            <div class="sync-title">⏳ Pending Uploads</div>
+            <div style='font-size: 2.5em; font-weight: 900; color: #f59e0b; margin: 0.5rem 0;'>{len(missing_in_s3)}</div>
+            <div class="sync-description">Files waiting to be uploaded</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown(f"""
+        <div class="sync-card info">
+            <div class="sync-title">🔍 Orphaned Files</div>
+            <div style='font-size: 2.5em; font-weight: 900; color: #3b82f6; margin: 0.5rem 0;'>{len(orphan_in_s3)}</div>
+            <div class="sync-description">Files only in S3 (archive)</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Detailed alerts
     col1, col2 = st.columns(2)
     
     with col1:
         if missing_in_s3:
-            pending_list = ", ".join(sorted(list(missing_in_s3)[:2]))
-            if len(missing_in_s3) > 2:
-                pending_list += f" +{len(missing_in_s3)-2} more"
-            st.warning(f"**⚠️ Pending Upload:** {pending_list}")
+            pending_list = "\n• ".join(sorted(list(missing_in_s3)[:5]))
+            if len(missing_in_s3) > 5:
+                pending_list += f"\n• ... and {len(missing_in_s3)-5} more"
+            st.warning(f"**📤 These files need upload:**\n• {pending_list}")
+        else:
+            st.success("**✨ All local files are uploaded!**")
     
     with col2:
         if orphan_in_s3:
-            orphan_list = ", ".join(sorted(list(orphan_in_s3)[:2]))
-            if len(orphan_in_s3) > 2:
-                orphan_list += f" +{len(orphan_in_s3)-2} more"
-            st.info(f"**ℹ️ S3 Only:** {orphan_list}")
+            orphan_list = "\n• ".join(sorted(list(orphan_in_s3)[:5]))
+            if len(orphan_in_s3) > 5:
+                orphan_list += f"\n• ... and {len(orphan_in_s3)-5} more"
+            st.info(f"**📦 Archive (in S3 only):**\n• {orphan_list}")
+        else:
+            st.info("**✨ No orphaned files in S3**")
     
     st.markdown("<hr>", unsafe_allow_html=True)
     
