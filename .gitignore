@@ -1,0 +1,33 @@
+# Environment variables
+.env
+.streamlit/secrets.toml
+
+# AWS credentials
+aws_creds.json
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+.venv
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data/checkpoints (optional - adjust as needed)
+checkpoint.json
+batches/
+batch_*.txt
+2026*.txt
+
+# OS
+.DS_Store
+Thumbs.db
